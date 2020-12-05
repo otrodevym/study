@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <div id="root2"></div>
+    <div id="root3"></div>
+    <script type="text/babel">
+        function formatName(user){
+            return user.firstName + ' ' + user.lastName;
+        }
+
+        function getGreeting(user){
+            if(user) {
+                return <h1>Hello, {formatName(user)}!!</h1>
+            }
+            return <h1>Heelo, yyy</h1>
+        }
+
+        const user = {
+            firstName : 'kim',
+            lastName : 'ym'
+        };
+        const element = (
+            <h1>Hello, {formatName(user)}!</h1>
+        );
+        ReactDOM.render(element, document.getElementById('root'));
+        ReactDOM.render(getGreeting(user), document.getElementById('root2'));
+        ReactDOM.render(getGreeting(), document.getElementById('root3'));
+    </script>
+</body>
+
+</html>

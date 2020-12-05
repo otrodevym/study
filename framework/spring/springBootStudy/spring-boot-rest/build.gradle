@@ -1,0 +1,76 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.rest'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+    
+    
+    task initSourceFolders {
+		sourceSets*.java.srcDirs*.each {
+			if( !it.exists() ) {
+				it.mkdirs()
+			}
+		}
+		
+		sourceSets*.resources.srcDirs*.each {
+			if( !it.exists() ) {
+				it.mkdirs()
+			}
+		}
+	}
+
+
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-data-jpa')
+        
+        compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+        compile('org.springframework.data:spring-data-rest-hal-browser')
+		compileOnly 'org.projectlombok:lombok'
+        runtime('org.springframework.boot:spring-boot-devtools')
+    	compile("org.springframework.boot:spring-boot-starter-jdbc:2.0.1.RELEASE")
+        runtime('mysql:mysql-connector-java')
+        runtime('com.h2database:h2')
+        compileOnly('org.projectlombok:lombok')
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+        testCompile('org.springframework.security:spring-security-test')
+    }
+}
+
+project(':data-rest') {
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-data-rest') {
+            exclude module: "jackson-databind"
+        }
+        compile('org.springframework.boot:spring-boot-starter-security')
+    }
+}
+
+project(':rest-web') {
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-web') {
+            exclude module: "jackson-databind"
+        }
+        compile('org.springframework.boot:spring-boot-starter-security')
+        compile('org.springframework.boot:spring-boot-starter-hateoas')
+    }
+}

@@ -1,0 +1,26 @@
+property:
+    test:
+      name: property depth test
+propertyTestList: a,b,c
+fruit:
+  list:
+    - name: banana
+      color: yellow
+    - name: applie
+      color: red
+    - name: water melon
+      color: green
+
+server:
+  port: 80
+spring:
+  profiles: local
+  banner:
+    image:
+      location: banner.txt
+---
+server:
+  port: 9090
+spring:
+  profiles: test
+  

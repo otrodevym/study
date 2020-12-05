@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="root"></div>
+    <div id="root2"></div>
+    <div id="root3"></div>
+    <div id="root4"></div>
+    <div id="root5"></div>
+    <div id="root6"></div>
+    <div id="root7"></div>
+    <div id="root8"></div>
+    <div id="root9"></div>
+
+    <script type='text/babel'>
+        const numbers = [1,2,3,4,5];
+        const doubled = numbers.map((number) => number * 2);
+        console.log('doubled', doubled);
+
+        const listItems = numbers.map((number) => <li key={number.toString()}>{number} </li>);
+        ReactDOM.render(
+            <ul>{listItems}</ul>,
+            document.getElementById('root')
+        )
+
+
+
+        function NumberList(props) {
+            const numbers = props.numbers;
+            const listItems = numbers.map((number) => <li key={number.toString()}>{number}</li>);
+
+            return (
+                <ul>{listItems}</ul>
+            );
+        }
+        const numbers2 = [1,2,3,4,5];
+        ReactDOM.render(
+            <NumberList numbers={numbers2} />,
+            document.getElementById('root2')
+        );
+
+        function NumberList2(props) {
+            const numbers = props.numbers;
+            const listItems = numbers.map((number, index) => <li key={index}>{number}</li>);
+
+            return (
+                <ul>{listItems}</ul>
+            );
+        }
+        const numbers3 = [1,2,3,4,5];
+        ReactDOM.render(
+            <NumberList numbers={numbers2} />,
+            document.getElementById('root3')
+        );
+        
+
+        // key 사용 안좋은 예
+        function ListItem4(props) {
+            const value = props.value;
+            return (
+                <li key={value.toString()}>
+                    {value}
+                </li>
+            );
+        }
+        function NumberList4(props) {
+            const numbers = props.numbers;
+            const listItem = numbers.map((number) => <ListItem4 value={number} /> );
+            return  (
+                <ul>
+                    {listItems}
+                </ul>
+            );
+        }
+
+        const numbers4 = [1,2,3,4,5];
+        ReactDOM.render(
+            <NumberList4 numbers={numbers4} />,
+            document.getElementById('root4')
+        );
+
+        // key 사용 좋은 예 : map 안에 사용해서 순서가 맞도록 처리한다.
+        function ListItem5(props) {
+            const value = props.value;
+            return (
+                <li key={value.toString()}>
+                    {value}
+                </li>
+            );
+        }
+        function NumberList5(props) {
+            const numbers = props.numbers;
+            const listItem = numbers.map((number) => <ListItem5 value={number} /> );
+            return  (
+                <ul>
+                    {listItems}
+                </ul>
+            );
+        }
+
+        const numbers5 = [1,2,3,4,5];
+        ReactDOM.render(
+            <NumberList5 numbers={numbers5} />,
+            document.getElementById('root5')
+        );
+
+//-----
+        function Blog(props) {
+            const sidebar = (
+                <ul>
+                    {props.posts.map((post) => 
+                        <li key={post.id}>
+                        {post.title}
+                        </li>
+                    )}
+                </ul>
+            );
+            const content = props.posts.map((post) => 
+                <div key={post.id}>
+                    <h3>{post.title}</h3>
+                    <p>{post.content}</p>
+                </div>
+            );
+            return (
+                <div>
+                    {sidebar}
+                    <hr />
+                    {content}
+                </div>
+            );
+        }
+
+        const posts = [
+            {id: 1, title: 'Hello world', content: 'Welcome to learning React!'},
+            {id: 2, title: 'Installation', content: 'You can install Reeact from npm.'},
+        ];
+
+        ReactDOM.render(
+            <Blog posts={posts} />,
+            document.getElementById('root6')
+        );
+
+// --------
+        function Post(props) {
+            console.log('props', props)
+            const list = (
+                <div> 
+                    {props.title}
+                </div>
+            )
+            return (
+                    <div>{list}</div>
+            )
+        }
+        const contents7 = posts.map((post) => 
+        <Post
+            key={post.id}
+            id={post.id}
+            title={post.title}
+        />
+        );
+        ReactDOM.render(
+            contents7,
+            document.getElementById('root7')
+        );
+
+
+// --------------
+
+function NumberList6(props) {
+    const numbers = props.numbers;
+    const listItems = numbers.map((number) => 
+        <ListItem6 key={number.toString()} value={number} />
+    );
+    return (
+        <ul>
+            {listItems}
+        </ul>
+    )
+}
+    function ListItem6(props) {
+        return <li>{props.value}</li>;
+    }
+
+    const number6 = [1,2,3,4,5];
+    ReactDOM.render(
+        <NumberList6 numbers={number6}/>,
+        document.getElementById('root8')
+    );
+
+
+function NumberList7(props) {
+    const numbers = props.numbers;
+    // const listItems = numbers.map((number) => 
+    //     <ListItem7 key={number.toString()} value={number} />
+    // );
+    return (
+        <ul>
+            {numbers.map((number) => 
+            <ListItem7 key={number.toString()} value={number}/>
+            )}
+        </ul>
+    )
+}
+    function ListItem7(props) {
+        return <li>{props.value}</li>;
+    }
+
+    const number7 = [1,2,3,4,5];
+    ReactDOM.render(
+        <NumberList7 numbers={number7}/>,
+        document.getElementById('root9')
+    );
+
+
+    </script>
+</body>
+</html>

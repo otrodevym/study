@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+	<http pattern="/resources/**/*.js" security="none" />
+	<http pattern="/resources/**/*.css" security="none" />
+
+	<beans:bean id="customizeAuthenticationSuccessHandler"
+		class="com.otrodevym.test.custom.CustomizeAuthenticationSuccessHandler" />
+	<beans:bean id="customizeAuthenticationFailureHandler"
+		class="com.otrodevym.test.custom.CustomizeAuthenticationFailureHandler" />
+	<beans:bean id="bcEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+
+
+	<http use-expressions="true" auto-config="true"
+		disable-url-rewriting="true">
+		<intercept-url pattern="/**" access="permitAll" />
+		<intercept-url pattern="/user/**"
+			access="hasAnyRole('USER,ADMIN')" />
+		<intercept-url pattern="/admin/**"
+			access="hasRole('ADMIN')" />
+
+		<form-login login-page="/login"
+			username-parameter="user_id" password-parameter="user_passwd"
+			default-target-url="/"
+			login-processing-url="/j_spring_security_check"
+			authentication-success-handler-ref="customizeAuthenticationSuccessHandler"
+			authentication-failure-handler-ref="customizeAuthenticationFailureHandler" />
+
+		<access-denied-handler
+			error-page="/login/not_authority" />
+		<session-management invalid-session-url="/">
+			<concurrency-control max-sessions="1"
+				expired-url="/" />
+		</session-management>
+		<csrf disabled="true" />
+		<remember-me remember-me-parameter="remember-me"
+			remember-me-cookie="remember-me" />
+		<logout invalidate-session="true"
+			logout-url="/j_spring_security_logout" logout-success-url="/"
+			delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider
+			user-service-ref="customDataSource">
+			<password-encoder ref="bcEncoder" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<beans:bean id="customDataSource"
+		class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="usersByUsernameQuery">
+			<beans:value>
+				SELECT user_id, password, enabled FROM login_info WHERE
+				user_id=?
+			</beans:value>
+		</beans:property>
+		<beans:property name="authoritiesByUsernameQuery">
+			<beans:value>
+				SELECT user_id, password, CASE WHEN authority = '1' THEN
+				'ROLE_USER' when
+				authority = '2' then 'ROLE_ADMIN' END AS ROLE_ID
+				FROM
+				login_info WHERE
+				user_id=?
+			</beans:value>
+		</beans:property>
+	</beans:bean>
+
+
+</beans:beans>
