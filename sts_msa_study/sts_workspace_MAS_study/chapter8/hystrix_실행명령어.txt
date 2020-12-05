@@ -1,0 +1,11 @@
+1. actuator 권한 풀기(search-apigateway)
+spring.application.name=search-apigateway
+server.port=8095
+spring.cloud.config.uri=http://localhost:8888
+ management.endpoints.web.exposure.include=*
+ 
+ 
+2. actuator hystrix.stream 으로 모니터링 하기
+http://localhost:8095/actuator/hystrix.stream
+
+3. curl http://localhost:8095/hubongw 로 날려보기

@@ -1,0 +1,1 @@
+logstash -f C:\Users\hwesd\git\sts_workspace_MAS_study\chapter8\logstash-7.6.2\config\logstash.conf
