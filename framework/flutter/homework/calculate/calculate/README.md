@@ -1,4 +1,4 @@
-# flutter_app
+# calculate
 
 A new Flutter application.
 
@@ -15,7 +15,7 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-
 ---
 
-유투브 코딩파파를 보고 따라했던 튜토리얼
+https://www.youtube.com/watch?v=Ca5QOkfgE9A&feature=youtu.be
+동영상을 따라해봄
