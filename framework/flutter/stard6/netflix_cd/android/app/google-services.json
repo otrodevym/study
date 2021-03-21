@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "578833779004",
+    "project_id": "yong-flix-94034",
+    "storage_bucket": "yong-flix-94034.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578833779004:android:546a90a1c0ed0a61a1f639",
+        "android_client_info": {
+          "package_name": "com.example.netflix_cd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578833779004-peb63m3oa22qhiisodmqui1frukecun9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCika8iD_vcJzsmt4h8o20vDdgpt2rIkJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578833779004-peb63m3oa22qhiisodmqui1frukecun9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
