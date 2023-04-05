@@ -1,10 +1,7 @@
 package alg.lv0
 
 class 편지 {
-    fun solution(message: String): Int {
-        var answer: Int = 0
-        return answer
-    }
+    fun solution(message: String) =  message.length.times(2)
 }
 
 fun main() {
