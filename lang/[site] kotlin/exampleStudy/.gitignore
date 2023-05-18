@@ -26,3 +26,4 @@ replay_pid*
 
 /lang/[site] kotlin/exampleStudy/src/main/kotlin/alg/ohouse/
 /.gradle/
+/build/
